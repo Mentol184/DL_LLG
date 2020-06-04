@@ -1,0 +1,26 @@
+SetGridSize(1, 1, 1)
+SetCellSize(5e-9, 5e-9, 5e-9)
+
+FilenameFormat = "table2.txt"
+
+Msat = 8.6e5
+Aex = 13e-12
+
+alpha = 0.1
+
+Ku1=-1e5
+
+anisu=vector(0,0,1)
+
+m = Uniform(1, 1, 0.5)
+
+tableautosave(1e-12)
+
+tableadd(B_demag)
+
+FixedLayer = vector(0, 0, -1)
+
+J = vector(0, 0, 800e9)
+
+Run(200e-9)
+
