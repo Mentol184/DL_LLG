@@ -1,0 +1,25 @@
+SetGridSize(1, 1, 1)
+SetCellSize(4e-9, 2e-9, 0.3e-9)
+
+Msat = 2e5
+Aex = 1.3e-11
+
+alpha = 0.04
+
+m = Uniform(1.0, 0.09, 0.01)
+
+tableautosave(1e-12)
+
+FixedLayer = vector(-1,0, 0)
+
+B_ext=vector(0,0,0)
+
+J = vector(0, 0,0.78e9)
+//Oscilaciones para 3.5e9 A/m2 y campo 0)
+
+tableadd(J)
+
+MaxDt = 1e-12
+MinDt = 1e-12
+
+Run(100e-9)
