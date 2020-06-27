@@ -1,0 +1,26 @@
+SetGridSize(1, 1, 1) // nm 
+SetCellSize(5e-9, 5e-9, 5e-9) // Cell size (nm), single spin
+
+Msat = 8.6e5 //¿?
+Aex = 13e-12 //¿?
+
+alpha = 0.1 // Damping factor
+
+Ku1=-1e5 // Anisotropy energy
+
+anisu=vector(0,0,1) // Anisotropy axis
+
+m = Uniform(1, 1, 0.5) //Initial magnetization
+
+tableautosave(1e-12)
+
+//tableadd(B_demag)
+
+FixedLayer = vector(0, 0, -1) // Magnetization fixed layer
+
+J = vector(0, 0, 800e9) // Current density A/m2
+
+tabledadd(J)
+
+Run(200e-9)
+
