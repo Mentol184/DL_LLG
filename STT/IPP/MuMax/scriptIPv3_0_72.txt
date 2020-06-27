@@ -15,7 +15,6 @@ FixedLayer = vector(-1,0, 0)
 B_ext=vector(0,0,0)
 
 J = vector(0, 0,0.72e9)
-//Oscilaciones para 3.5e9 A/m2 y campo 0)
 
 tableadd(J)
 
