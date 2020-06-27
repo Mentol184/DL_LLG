@@ -26,16 +26,12 @@ import matplotlib.pyplot as plt
 
 def main():
     
-    # neurons = [2,4,8,16,32,64,128,246]
-    # neurons = [128,246,492]
-    
-    # for neuron in neurons:
 
     ''' Prepare Data'''
-    data = pd.read_csv("dataset_enorme.csv",sep=',')
+    data = pd.read_csv("../Data/dataset.csv",sep=',')
     # data = data[ (data['Jz (A/m2)'] <= 80e9) & (data['Jz (A/m2)'] >= 70e9)]
 
-    modelo = "modelo_entero_3"
+    modelo = "modelo_4"
     # neuronas = str(neuron)
     # modelo = model + neuronas
     
@@ -64,28 +60,29 @@ def main():
     model = Sequential()
     
     
-    # Input layers
     model.add(Dense(246, input_dim=2, activation='tanh'))
         
     
     # Hidden layers
     model.add(Dense(246, activation='tanh'))
+    model.add(Dense(246, activation='tanh'))
     model.add(Dense(128, activation='tanh'))
     model.add(Dense(128, activation='tanh'))
-    model.add(Dense(64, activation='tanh'))
-    model.add(Dense(64, activation='tanh'))
-    model.add(Dense(32, activation='tanh'))
-    model.add(Dense(32, activation='tanh'))
+    model.add(Dense(128, activation='tanh'))
+    # model.add(Dense(64, activation='tanh'))
+    # model.add(Dense(64, activation='tanh'))
+    # model.add(Dense(32, activation='tanh'))
+    # model.add(Dense(32, activation='tanh'))
 
        
     #output layer
     model.add(Dense(3, activation='tanh'))
     
     #Optimizer
-    nadam = Nadam(learning_rate=0.001, beta_1=0.9, beta_2=0.999)
-    adam = keras.optimizers.Adam(learning_rate=0.00001)
+    nadam = Nadam(learning_rate=0.01, beta_1=0.9, beta_2=0.999)
+    adam = keras.optimizers.Adam(learning_rate=0.0001)
     
-    model.compile(loss=custom_loss, optimizer="adam", metrics=['mse','accuracy'])
+    model.compile(loss=custom_loss, optimizer="sgd", metrics=['mse','accuracy'])
     
     
     '''Training Strategy'''
@@ -125,7 +122,7 @@ def train_model(model, training_x, training_y):
     
     # Fit model (train model)
     # results = model.fit(training_x, training_y, validation_data=(x_test,y_test), epochs=1000, batch_size=50000) 
-    results = model.fit(training_x, training_y, epochs=9000, batch_size=80000, callbacks=[es], shuffle=True) 
+    results = model.fit(training_x, training_y, epochs=10000, batch_size=2000, callbacks=[es], shuffle=True, verbose=1) 
 
     # Print elapsed time
     elapsed_time = time.time() - start_time  
@@ -139,8 +136,8 @@ def train_model(model, training_x, training_y):
 def custom_loss(y_true, y_predict):
     
     
-    l2 = K.sum(K.abs(y_true-y_predict))
-    l1 = K.sum(K.sqrt(K.pow(y_predict,2) -1))
+    l2 = K.mean(K.pow(K.abs(y_true-y_predict),2))
+    l1 = K.mean(K.pow((K.sqrt(K.pow(y_predict,2) -1)),2))
     
     l = l1+l2
     
@@ -176,9 +173,9 @@ def model_loss(results, modelo):
 # This function plot the predicted data.
 def testing(model, y_training_scaler, x_training_scaler,modelo, data):
     
-    current = 75e+09
+    current = 0.76e+09
 
-    time = np.arange(0,5e-8,1e-11)
+    time = np.arange(0,10e-8,1e-11)
     
     points = time.size
     
