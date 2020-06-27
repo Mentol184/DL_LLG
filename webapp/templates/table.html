@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<style>
+form {
+    margin: auto;
+    width: 40%;
+}
+.result {
+    margin: auto;
+    width: 40%;
+    border: 1px solid #ccc;
+}
+.table{
+.table-responsive
+}
+</style>
+<head>
+
+    <title>Deep Learning Micromagnetism</title>
+
+	<link href="https://www.neuraldesigner.com/assets/css/neuraldesigner.css" rel="stylesheet"/>
+</head>
+
+
+<div class="result" align="center">
+	<!--<form action="{{ url_for('table') }}" method="POST">
+    <fieldset>
+        <input type="submit" name="export csv">
+    </fieldset>
+	</form>-->
+	
+	
+    {% if result %}
+       
+		<h2>Data</h2>
+		{% for table in result %}
+            {{ table|safe }}
+		{% endfor %}
+	<a href="/exportTable" class="button">Export csv</a> 
+    {% endif %}
+</div>
+
+</html>

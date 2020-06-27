@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<style>
+form {
+    margin: auto;
+    width: 35%;
+}
+.result {
+    margin: auto;
+    width: 35%;
+    border: 1px solid #ccc;
+}
+.table{
+.table-responsive
+}
+</style>
+<head>
+
+    <title>Deep Learning Micromagnetism</title>
+
+	<link href="https://www.neuraldesigner.com/assets/css/neuraldesigner.css" rel="stylesheet"/>
+</head>
+<hr>
+
+<h1> Absence of the anisotropy energy</h1>
+	<form action="{{ url_for('main') }}" method="POST">
+    <fieldset>
+        <legend>Input values:</legend>
+        Magnetic Field(T):
+        <input name="magnetic_field" type="number" placeholder="0.1" step="0.001" min="0" max="1" required>
+        <br>
+        <br> Dumping Factor:
+        <input name="dumping_factor" type="number" placeholder="0.01" step="0.001" min="0" max="1" required>
+        <br>
+		<br>
+		<input name="anisotropy" type="hidden" id="anisotropy" value="0">
+
+        <input type="submit">
+    </fieldset>
+	</form>
+<br>
+<div class="result" align="center">
+	<br>
+	<br>
+    {% if result1 %}
+        {% for variable, value in original_input.items() %}
+            <b>{{ variable }}</b> : {{ value }}
+        {% endfor %}
+        <br>
+        <br> 
+		<h2>Chart</h2>
+		<p> The next chart show the predictions </p>
+		<img src="/plot.png" alt="my plot">
+		<h2>Data</h2>
+		<p> The next table show a table preview</p>
+			{% for table in result1 %}
+				{{ table|safe }}
+			{% endfor %}
+		<p>
+			<a href="/table" class="button">View Full Table</a>
+			<a href="/exportTable" class="button">Export csv</a>
+		</p>
+    {% endif %}
+</div>
+
+<hr>
+
+<h1> Absence of an external field</h1>
+<form action="{{ url_for('main') }}" method="POST">
+    <fieldset>
+        <legend>Input values:</legend>
+        Magnetic Field (T):
+        <input name="magnetic_field" type="number" placeholder="0.1" step="0.001" min="0" max="1" required>
+        <br>
+        <br> Dumping Factor:
+        <input name="dumping_factor" type="number" placeholder="0.01" step="0.001" min="0" max="1" required>
+        <br>
+		<br>
+		<input name="anisotropy" type="hidden" id="anisotropy" value="1">
+		
+        <input type="submit">
+    </fieldset>
+</form>
+<br>
+
+
+<div class="result" align="center">
+	<br>
+	<br>
+    {% if result %}
+        {% for variable, value in original_input.items() %}
+            <b>{{ variable }}</b> : {{ value }}
+        {% endfor %}
+        <br>
+        <br> 
+		<h2>Chart</h2>
+		<p> The next chart show the predictions </p>
+		<img src="/plot.png" alt="my plot">
+		<h2>Data</h2>
+		<p> The next table show a table preview</p>
+			{% for table in result %}
+				{{ table|safe }}
+			{% endfor %}
+		<p>
+			<a href="/table" class="button">View Full Table</a>
+			<a href="/exportTable" class="button">Export csv</a>
+		</p>	
+    {% endif %}
+</div>
+
+	
+<!--{% for table in result %}
+            {{ table|safe }}
+		{% endfor %}-->
+</html>
